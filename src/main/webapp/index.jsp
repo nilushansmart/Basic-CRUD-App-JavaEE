@@ -163,6 +163,25 @@
                 }
             });
     }
+
+
+
+    function getAllEmployees() {
+        fetch('http://localhost:8080/CRUD_App_war_exploded/employee')
+            .then((response) => response.json())
+            .then((json) => {
+                let display = "";
+                json.forEach(val => {
+                    display += `<tr>
+                    <td>val</td>
+                    <td>$val.name</td>
+                    <td>$val.address</td>
+                    <td>$val.position</td>
+                </tr>`
+                });
+                document.getElementById("display").innerHTML=display;
+            });
+    }
 </script>
 
 </body>
