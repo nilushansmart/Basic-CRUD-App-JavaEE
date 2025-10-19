@@ -110,6 +110,25 @@
                 }
             });
     }
+
+
+
+    function deleteEmployee() {
+        const idNo = document.getElementById("txtIdNo").value;
+
+        fetch('http://localhost:8080/CRUD_App_war_exploded/employee' + idNo, {
+            method: 'DELETE',
+        })
+            .then((response) => response.json())
+            .then((json) => {
+                if (json === true) {
+                    alert('Employee deleted successfully......');
+                    document.getElementById("txtIdNo").value = "";
+                } else {
+                    alert('Invalid Employee ID......');
+                }
+            });
+    }
 </script>
 
 </body>
