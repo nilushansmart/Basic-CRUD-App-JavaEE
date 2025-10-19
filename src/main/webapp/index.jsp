@@ -79,7 +79,37 @@
 </div>
 
 <script>
+    function saveEmployee() {
+        const idNo = document.getElementById("txtIdNo").value;
+        const name = document.getElementById("txtName").value;
+        const address = document.getElementById("txtAddress").value;
+        const position = document.getElementById("txtPosition").value;
 
+        fetch('http://localhost:8080/CRUD_App_war_exploded/employee', {
+            method: 'POST',
+            body: JSON.stringify({
+                idNo: idNo,
+                name: name,
+                address: address,
+                position: position
+            }),
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+            },
+        })
+            .then((response) => response.json())
+            .then((json) => {
+                if (json === true) {
+                    alert('Employee added successfully......');
+                    document.getElementById("txtIdNo").value = "";
+                    document.getElementById("txtName").value = "";
+                    document.getElementById("txtAddress").value = "";
+                    document.getElementById("txtPosition").value = "";
+                } else {
+                    alert('Employee added failed.....');
+                }
+            });
+    }
 </script>
 
 </body>
