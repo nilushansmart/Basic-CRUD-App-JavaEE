@@ -7,7 +7,7 @@ import java.sql.SQLException;
 public class DbConnection {
     private static DbConnection dbcon;
 
-    private Connection conn;
+    private Connection connection;
 
     private DbConnection() throws SQLException, ClassNotFoundException {
         //need to load Driver class to the ram
@@ -17,14 +17,14 @@ public class DbConnection {
         Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/afsd_10", "root", "root");
     }
 
-    public static DbConnection DbConnection() throws SQLException, ClassNotFoundException {
+    public static DbConnection getDbcon() throws SQLException, ClassNotFoundException {
         if (dbcon==null){
             dbcon=new DbConnection();
         }
         return dbcon;
     }
 
-    public Connection getConn(){
-        return conn;
+    public Connection getConnection(){
+        return connection;
     }
 }

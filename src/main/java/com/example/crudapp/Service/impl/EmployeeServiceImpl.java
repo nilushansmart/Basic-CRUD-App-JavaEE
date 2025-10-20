@@ -12,14 +12,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public boolean saveEmployee(EmployeeDTO employeeDTO) {
         try {
-            //need to load Driver class to the ram
-            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection conn = DbConnection.getDbcon().getConnection();
 
-            //Create connection with mysql db server
-            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/afsd_10", "root", "root");
-
-            //Create a dynamic query
-            PreparedStatement statement = connection.prepareStatement("insert into employee (id_no, name, address, position) values (?, ?, ?, ?)");
+            PreparedStatement statement = conn.prepareStatement("insert into employee (id_no, name, address, position) values (?, ?, ?, ?)");
 
             statement.setObject(1,employeeDTO.getIdNo());
             statement.setObject(2,employeeDTO.getName());
@@ -42,10 +37,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public boolean deleteEmployee(int id) {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/afsd_10", "root", "root");
+            Connection conn = DbConnection.getDbcon().getConnection();
 
-            PreparedStatement statement = connection.prepareStatement("Delete from employee where id_no = ? ");
+            PreparedStatement statement = conn.prepareStatement("Delete from employee where id_no = ? ");
             statement.setObject(1, id);
 
             int status = statement.executeUpdate();
@@ -64,10 +58,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public EmployeeDTO searchEmployee(int id) {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/afsd_10", "root", "root");
+            Connection conn = DbConnection.getDbcon().getConnection();
 
-            PreparedStatement statement = connection.prepareStatement("select * from employee where id_no = ?");
+            PreparedStatement statement = conn.prepareStatement("select * from employee where id_no = ?");
 
             statement.setObject(1, id);
 
@@ -88,10 +81,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public boolean update(EmployeeDTO employeeDTO) {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/afsd_10", "root", "root");
-
-            PreparedStatement statement = connection.prepareStatement("update employee set name = ?, address = ?, position = ? where id_no = ? ");
+            Connection conn = DbConnection.getDbcon().getConnection();
+            PreparedStatement statement = conn.prepareStatement("update employee set name = ?, address = ?, position = ? where id_no = ? ");
 
             statement.setObject(1, employeeDTO.getName());
             statement.setObject(2,employeeDTO.getAddress());
@@ -115,9 +106,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     public ArrayList<EmployeeDTO> getAllEmployee() {
         ArrayList<EmployeeDTO> employee = new ArrayList<>();
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/afsd_10", "root", "root");
-            PreparedStatement stm = connection.prepareStatement("select * from employee");
+            Connection conn = DbConnection.getDbcon().getConnection();
+
+            PreparedStatement stm = conn.prepareStatement("select * from employee");
 
             ResultSet resultSet = stm.executeQuery();
 

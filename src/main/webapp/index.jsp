@@ -67,12 +67,12 @@
             </tr>
             </thead>
             <tbody id="display">
-<%--            <tr>--%>
-<%--                <td></td>--%>
-<%--                <td></td>--%>
-<%--                <td></td>--%>
-<%--                <td></td>--%>
-<%--            </tr>--%>
+            <%--            <tr>--%>
+            <%--                <td></td>--%>
+            <%--                <td></td>--%>
+            <%--                <td></td>--%>
+            <%--                <td></td>--%>
+            <%--            </tr>--%>
             </tbody>
         </table>
     </div>
@@ -112,12 +112,18 @@
     }
 
 
-
     function deleteEmployee() {
-        const idNo = document.getElementById("txtIdNo").value;
+      const val = document.getElementById("txtIdNo").value;
 
-        fetch('http://localhost:8080/CRUD_App_war_exploded/employee' + idNo, {
+        <%--fetch('http://localhost:8080/CRUD_App_war_exploded/employee?idNo=${val}',{--%>
+        <%--    method: 'DELETE',--%>
+
+        fetch('http://localhost:8080/CRUD_App_war_exploded/employee', {
             method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json', // Specify the content type
+            },
+            body: JSON.stringify({val}), // Data to send
         })
             .then((response) => response.json())
             .then((json) => {
@@ -129,7 +135,6 @@
                 }
             });
     }
-
 
 
     function updateEmployee() {
@@ -165,7 +170,6 @@
     }
 
 
-
     function getAllEmployees() {
         fetch('http://localhost:8080/CRUD_App_war_exploded/employee')
             .then((response) => response.json())
@@ -173,13 +177,13 @@
                 let display = "";
                 json.forEach(val => {
                     display += `<tr>
-                    <td>val</td>
-                    <td>$val.name</td>
-                    <td>$val.address</td>
-                    <td>$val.position</td>
+                    <td>${val.idNo}</td>
+                    <td>${val.name}</td>
+                    <td>${val.address}</td>
+                    <td>${val.position}</td>
                 </tr>`
                 });
-                document.getElementById("display").innerHTML=display;
+                document.getElementById("display").innerHTML = display;
             });
     }
 </script>
